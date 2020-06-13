@@ -1,0 +1,48 @@
+package Selenium22;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+//import com.sun.tools.javac.util.List;
+
+public class DynamicGOOGLEserach {
+
+	public static void main(String[] args) {
+		
+		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		
+		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		
+		driver.get("http://www.google.com/");
+		
+		driver.findElement(By.name("q")).sendKeys("testing");
+		
+		List<WebElement> list = driver.findElements(By.xpath("//ul[@role='listbox']//li/descendant::div[@class='sbl1']"));
+		System.out.println(list.size());
+		
+		for(int i=0; i<list.size(); i++) {
+			String googleliString = list.get(i).getText();
+			System.out.println(googleliString);
+			
+			if(googleliString.equals("testing types")) {
+				list.get(i).click();
+				break;
+			}
+		}
+		
+		
+		
+		
+		
+	}
+
+}
